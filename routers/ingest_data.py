@@ -74,6 +74,10 @@ async def upload_file_link(download_link: str, course_name:str):
     except requests.exceptions.RequestException as e:
       print(f"Error downloading file: {e}")
       return None
+    content_type = response.headers.get('Content-Type')
+    if content_type and not content_type.startswith('text/html'):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid file URL or content type")
+
     try:
         # Write the downloaded data to the temporary file
         with open(filepath, "wb") as f:
