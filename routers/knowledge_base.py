@@ -35,8 +35,20 @@ def get_facebook_data():
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)) 
     
+@router.get("/get_files")
+def get_all_filenames():
+    try:
+        courses = get_all_course()
+        result = {}
+        for course in courses:
+            files = get_all_files(course)
+            result[course] = files
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)) 
 
-@router.get("/get_files/")
+
+@router.get("/get_files_by_course/")
 def get_course_files(course_name:str):
     try:
         result = get_all_files(course_name)
