@@ -7,11 +7,34 @@ from services.knowledge_base_services import (
     delete_course_file,
     )
 from services.memory_services import ChatHistory
+from services.facebook_services import get_facebook_page_posts
+from data_definitions.schemas import Facebook_data
 router = APIRouter(
     prefix="/knowledge_base",
     tags=["knowledge_base"]
 )    
 
+@router.get("/get_facebook_data")
+def get_facebook_data():
+    try:
+        posts = get_facebook_page_posts()
+        if posts:
+            facebook_data_list = []
+            for post in posts['data']:
+                facebook_data = Facebook_data(
+                    post_id=post.get('id'),
+                    created_time=post.get('created_time'),
+                    content=post.get('message')
+                )
+                facebook_data_list.append(facebook_data)
+            return facebook_data_list
+        else:
+            raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="No facebook data found") 
+                
+        
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)) 
+    
 
 @router.get("/get_files/")
 def get_course_files(course_name:str):

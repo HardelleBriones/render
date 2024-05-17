@@ -47,6 +47,11 @@ class Text_knowledgeBase(BaseModel):
     topic: str
     text: str
 
+class Facebook_data(BaseModel):
+    post_id: str
+    created_time: datetime 
+    content: str
+
 class CollectionChange(BaseModel):
     old_collection: str
     new_collection: str
