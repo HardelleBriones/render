@@ -122,8 +122,6 @@ async def add_text_knowledge_base(course_name:str, metadata:Text_knowledgeBase):
         metadata={
             "file_name": file_name,
             "topic": metadata.topic,
-            "description":metadata.description,
-            "common_questions":metadata.common_questions,
         },
         excluded_llm_metadata_keys=['file_name'],
         excluded_embed_metadata_keys=['file_name'],

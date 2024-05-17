@@ -19,6 +19,8 @@ class TokenData(BaseModel):
 class Login(BaseModel):
     email: EmailStr
     password: str
+
+    
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -41,9 +43,9 @@ class FileMetadata(BaseModel):
     description: Optional[str] = ""
     common_questions: Optional[str] = ""
 
-class Text_knowledgeBase(FileMetadata):
-    topic: Optional[str] = ""
-    text: Optional[str] = ""
+class Text_knowledgeBase(BaseModel):
+    topic: str
+    text: str
 
 class CollectionChange(BaseModel):
     old_collection: str
